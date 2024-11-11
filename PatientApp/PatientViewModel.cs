@@ -9,9 +9,11 @@ namespace PatientApp
 {
     public class PatientViewModel : IPatient
     {
+        public event EventHandler<Patient> OnPatientRegistered;
+
         public ObservableCollection<Patient> Patients { get; private set; }
         public ObservableCollection<Patient> ConfirmedPatients { get; private set; }
-        
+
 
         public PatientViewModel()
         {
@@ -26,8 +28,7 @@ namespace PatientApp
             OnPatientRegistered?.Invoke(this, patient);
         }
 
-        public event EventHandler<Patient> OnPatientRegistered;
-        public void ConfirmPatients(List<Patient>selectedPatients)
+        public void ConfirmPatients(List<Patient> selectedPatients)
         {
             ConfirmedPatients.Clear();
             foreach (var patient in selectedPatients)

@@ -15,15 +15,11 @@ using System.Windows.Shapes;
 
 namespace PatientApp
 {
-    /// <summary>
-    /// Interaction logic for AppointmentConfirmationControl.xaml
-    /// </summary>
     public partial class AppointmentConfirmationControl : UserControl
     {
         private PatientViewModel _viewModel;
         public event Action NavigateToDashboard;
         public event Action AppointmentCompleted;
-
 
         public AppointmentConfirmationControl(PatientViewModel viewModel)
         {
@@ -31,48 +27,40 @@ namespace PatientApp
             _viewModel = viewModel;
             LoadPatients();
         }
+
         private void LoadPatients()
         {
-            // Assuming _viewModel.Patients is a List<Patient> that contains the registered patients
             foreach (var patient in _viewModel.Patients)
             {
                 var checkBox = new CheckBox
                 {
                     Content = $"{patient.Name} (Age: {patient.Age}, DOB: {patient.DateOfBirth.ToShortDateString()}, Address: {patient.Address})",
-                    Tag = patient // Store the patient object in the Tag property for later use
+                    Tag = patient
                 };
                 PatientsListBox.Items.Add(checkBox);
             }
         }
+
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             var selectedPatients = new List<Patient>();
-            for (int i= PatientsListBox.Items.Count-1; i >= 0; i--)
+            for (int i = PatientsListBox.Items.Count - 1; i >= 0; i--)
             {
                 CheckBox checkBox = PatientsListBox.Items[i] as CheckBox;
-                if ( checkBox != null && checkBox.IsChecked == true && checkBox.Tag is Patient patient)
+                if (checkBox != null && checkBox.IsChecked == true && checkBox.Tag is Patient patient)
                 {
                     selectedPatients.Add(patient);
                     PatientsListBox.Items.RemoveAt(i);
                 }
             }
+
             foreach (var confirmedPatient in selectedPatients)
             {
                 _viewModel.Patients.Remove(confirmedPatient);
             }
-            // Iterate through the CheckBoxes in the ListBox to find checked ones
-            //foreach (CheckBox checkBox in PatientsListBox.Items)
-            //{
-            //    if (checkBox.IsChecked == true && checkBox.Tag is Patient patient)
-            //    {
-            //        selectedPatients.Add(patient);
-            //    }
-            //}
+
             _viewModel.ConfirmPatients(selectedPatients);
-            MessageBox.Show(messageBoxText: "Are you sure to Confirm?",
-                    caption: "Confirm",
-                    button: MessageBoxButton.YesNo,
-                    icon: MessageBoxImage.Question);
+            MessageBox.Show("Appointment confirmed successfully.");
             AppointmentCompleted?.Invoke();
             NavigateToDashboard?.Invoke();
         }

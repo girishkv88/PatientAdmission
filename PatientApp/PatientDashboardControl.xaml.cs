@@ -15,21 +15,16 @@ using System.Windows.Shapes;
 
 namespace PatientApp
 {
-    /// <summary>
-    /// Interaction logic for PatientDashboardControl.xaml
-    /// </summary>
     public partial class PatientDashboardControl : UserControl
     {
         private PatientViewModel _viewModel;
-        
+
         public PatientDashboardControl(PatientViewModel viewModel)
         {
             InitializeComponent();
             _viewModel = viewModel;
             DataContext = _viewModel;
             grdPatients.ItemsSource = _viewModel.ConfirmedPatients;
-
-
         }
     }
 }

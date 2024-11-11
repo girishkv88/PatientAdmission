@@ -23,6 +23,7 @@ namespace PatientApp
         private PatientViewModel _viewModel;
         public event Action NavigateToAppointment;
         public event Action RegistrationCompleted;
+
         public PatientRegControl(PatientViewModel viewModel)
         {
             InitializeComponent();
@@ -31,21 +32,74 @@ namespace PatientApp
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
+            // Input validation
+            string name = NameTextBox.Text.Trim();
+            string address = AddressTextBox.Text.Trim();
+            string slot = (SlotComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+            DateTime? dateOfBirth = DOBPicker.SelectedDate;
+            DateTime bookingDate = DateTime.Now;
+
+            // Validate Name
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                MessageBox.Show("Please enter a valid name.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Validate Age
+            if (!int.TryParse(AgeTextBox.Text, out int age) || age <= 0)
+            {
+                MessageBox.Show("Please enter a valid age (positive integer).", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Validate Date of Birth
+            if (!dateOfBirth.HasValue)
+            {
+                MessageBox.Show("Please select a valid date of birth.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Validate Slot
+            if (string.IsNullOrWhiteSpace(slot))
+            {
+                MessageBox.Show("Please select a time slot.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Validate Address
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                MessageBox.Show("Please enter a valid address.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Create Patient object
             var patient = new Patient
             {
-                Name = NameTextBox.Text,
-                Age = int.Parse(AgeTextBox.Text),
-                DateOfBirth = DOBPicker.SelectedDate.Value,
-                Address = AddressTextBox.Text,
-                Slot = SlotComboBox.SelectedItem.ToString(),
-                BookingDate = DateTime.Now
+                Name = name,
+                Age = age,
+                DateOfBirth = dateOfBirth.Value,
+                Address = address,
+                Slot = slot,
+                BookingDate = bookingDate
             };
-            _viewModel.RegisterPatient(patient);
-            MessageBox.Show("Patient Details entered Succesfully");
-            RegistrationCompleted?.Invoke();
 
-            // Trigger navigation to appointment confirmation
-            NavigateToAppointment?.Invoke();
+            try
+            {
+                // Register the patient
+                _viewModel.RegisterPatient(patient);
+                MessageBox.Show("Patient details entered successfully.", "Registration Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                RegistrationCompleted?.Invoke();
+
+                // Trigger navigation to appointment confirmation
+                NavigateToAppointment?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during registration
+                MessageBox.Show($"An error occurred while registering the patient: {ex.Message}", "Registration Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
