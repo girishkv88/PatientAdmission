@@ -21,8 +21,8 @@ namespace PatientApp
     public partial class PatientRegControl : UserControl
     {
         private PatientViewModel _viewModel;
-        public event Action NavigateToAppointment;
-        public event Action RegistrationCompleted;
+        public event EventHandler NavigateToAppointment;
+        public event EventHandler RegistrationCompleted;
 
         public PatientRegControl(PatientViewModel viewModel)
         {
@@ -89,11 +89,11 @@ namespace PatientApp
             {
                 // Register the patient
                 _viewModel.RegisterPatient(patient);
-                MessageBox.Show("Patient details entered successfully.", "Registration Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                RegistrationCompleted?.Invoke();
+                //MessageBox.Show("Patient details entered successfully.", "Registration Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                RegistrationCompleted?.Invoke(this,EventArgs.Empty);
 
                 // Trigger navigation to appointment confirmation
-                NavigateToAppointment?.Invoke();
+                NavigateToAppointment?.Invoke(this,EventArgs.Empty);
             }
             catch (Exception ex)
             {

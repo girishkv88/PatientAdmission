@@ -18,14 +18,25 @@ namespace PatientApp
     public partial class AppointmentConfirmationControl : UserControl
     {
         private PatientViewModel _viewModel;
-        public event Action NavigateToDashboard;
-        public event Action AppointmentCompleted;
+        public event EventHandler NavigateToDashboard;
+        public event EventHandler AppointmentCompleted;
 
         public AppointmentConfirmationControl(PatientViewModel viewModel)
         {
             InitializeComponent();
             _viewModel = viewModel;
+            _viewModel.PatientRegistered += OnPatientRegistered;
             LoadPatients();
+           
+        }
+
+        private void OnPatientRegistered(object sender, string message)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                RegistrationTextBox.Text = message;
+            });
+            
         }
 
         private void LoadPatients()
@@ -61,8 +72,8 @@ namespace PatientApp
 
             _viewModel.ConfirmPatients(selectedPatients);
             MessageBox.Show("Appointment confirmed successfully.");
-            AppointmentCompleted?.Invoke();
-            NavigateToDashboard?.Invoke();
+            AppointmentCompleted?.Invoke(this,EventArgs.Empty);
+            NavigateToDashboard?.Invoke(this,EventArgs.Empty);
         }
     }
 }

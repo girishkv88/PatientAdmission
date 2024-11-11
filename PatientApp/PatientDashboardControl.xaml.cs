@@ -24,7 +24,19 @@ namespace PatientApp
             InitializeComponent();
             _viewModel = viewModel;
             DataContext = _viewModel;
+            _viewModel.PatientRegistered += OnPatientRegistered;
             grdPatients.ItemsSource = _viewModel.ConfirmedPatients;
         }
+
+        private void OnPatientRegistered(object sender, string message)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                RegistrationStatusTextBox.Text = message;
+            });
+           
+        }
+
+       
     }
 }

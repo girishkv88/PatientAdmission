@@ -26,16 +26,22 @@ namespace PatientApp
         {
             InitializeComponent();
             _viewModel = new PatientViewModel();
+            _viewModel.OnPatientRegistered += OnPatientRegistered;
+        }
+
+        private void OnPatientRegistered(object sender, Patient patient)
+        {
+            MessageBox.Show($"Patient {patient.Name} registered!", "Registration Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void btnRegistration_Click(object sender, RoutedEventArgs e)
         {
             var patientRegControl = new PatientRegControl(_viewModel);
-            patientRegControl.RegistrationCompleted += () => MainContent.Content = null;
-            patientRegControl.NavigateToAppointment += () =>
+            patientRegControl.RegistrationCompleted += (s,args) => MainContent.Content = null;
+            patientRegControl.NavigateToAppointment += (s,args) =>
             {
                 var appointmentControl = new AppointmentConfirmationControl(_viewModel);
-                appointmentControl.AppointmentCompleted += () => MainContent.Content = null;
+                appointmentControl.AppointmentCompleted += (s1, args1) => MainContent.Content = null;
                 MainContent.Content = appointmentControl;
             };
             MainContent.Content = patientRegControl;
@@ -44,7 +50,7 @@ namespace PatientApp
         private void btnAppointment_Click(object sender, RoutedEventArgs e)
         {
             var appointmentConfirmationControl = new AppointmentConfirmationControl(_viewModel);
-            appointmentConfirmationControl.AppointmentCompleted += () => MainContent.Content = null;
+            appointmentConfirmationControl.AppointmentCompleted += (s,args) => MainContent.Content = null;
             MainContent.Content = appointmentConfirmationControl;
         }
 
