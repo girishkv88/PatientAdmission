@@ -59,5 +59,10 @@ namespace PatientApp
             var patientDashboardControl = new PatientDashboardControl(_viewModel);
             MainContent.Content = patientDashboardControl;
         }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

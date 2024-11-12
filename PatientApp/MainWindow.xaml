@@ -6,12 +6,24 @@
         xmlns:local="clr-namespace:PatientApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Canvas>
-        <TextBlock Text="Patient Management System" FontSize="29" Canvas.Left="200" Canvas.Top="10" FontWeight="Bold"/>
-        <Button x:Name="btnRegistration" Content="Register Patient" Canvas.Left="10" Canvas.Top="80" Click="btnRegistration_Click" />
-        <Button x:Name="btnAppointment" Content="Appointment Confirmation" Canvas.Left="10" Canvas.Top="130" Click="btnAppointment_Click" />
-        <Button x:Name="btnDashboard" Content="Patient Dashboard" Canvas.Left="10" Canvas.Top="180" Click="btnDashboard_Click"/>
-        <ContentControl x:Name="MainContent" Canvas.Left="200" Canvas.Top="60" Width="400" Height="300" HorizontalAlignment="Center" VerticalAlignment="Center">
-        </ContentControl>
-    </Canvas>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Column="0" Margin="20,20,589,20" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+            <StackPanel>
+                <Button Content="Patient Registration"  Width="160" Height="40" Margin="0,10"  x:Name="btnRegistration" Click="btnRegistration_Click" />
+                <Button Content="Appointment Confirmation"  Width="160" Height="40" Margin="0,10" x:Name="btnAppointment" Click="btnAppointment_Click" />
+                <Button Content="Patient Dashboard" x:Name="btnDashboard" Width="160" Height="40" Margin="0,10" Click="btnDashboard_Click" />
+                <Button Content="Exit" x:Name="Exit" Width="160" Height="40" Margin="0,10" Click="Exit_Click" />
+            </StackPanel>
+        </DockPanel>
+
+        <ContentControl x:Name="MainContent" Grid.Column="1" Margin="20" />
+    </Grid>
+
+   
 </Window>

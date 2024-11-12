@@ -7,28 +7,32 @@
              mc:Ignorable="d" 
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Canvas Width="400" Height="450">
-        <TextBlock Text="Name" Canvas.Left="10" Canvas.Top="10"/>
-        <TextBox x:Name="NameTextBox" Width="200" Canvas.Left="10" Canvas.Top="30"/>
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Text="Patient Registration" FontSize="20" FontWeight="Bold" />
+            
+            <TextBlock Text="Name"  />
+            <TextBox x:Name="NameTextBox"  />
 
-        <TextBlock Text="Age" Canvas.Left="10" Canvas.Top="70"/>
-        <TextBox x:Name="AgeTextBox" Width="200" Canvas.Left="10" Canvas.Top="90"/>
+            <TextBlock Text="Age"/>
+            <TextBox x:Name="AgeTextBox"/>
+            
+            <TextBlock Text="Date of Birth:" />
+            <DatePicker x:Name="DOBPicker"  SelectedDateFormat="Short"  DisplayDateEnd="{x:Static sys:DateTime.Now}"/>
 
-        <TextBlock Text="Date of Birth" Canvas.Left="10" Canvas.Top="130"/>
-        <DatePicker x:Name="DOBPicker"  SelectedDateFormat="Short"  DisplayDateStart="{x:Static sys:DateTime.Now}" Canvas.Left="10" Canvas.Top="331"/>
+            <TextBlock Text="Address:" />
+            <TextBox x:Name="AddressTextBox" />
+            <TextBlock Text="Slot:" />
+            <ComboBox x:Name="SlotComboBox" >
+                <ComboBoxItem Content="Morning"  />
+                <ComboBoxItem Content="Evening" />
+            </ComboBox>
 
-        <TextBlock Text="Address" Canvas.Left="10" Canvas.Top="190"/>
-        <TextBox x:Name="AddressTextBox" Width="200" Canvas.Left="10" Canvas.Top="210"/>
-
-        <TextBlock Text="Slot" Canvas.Left="10" Canvas.Top="250"/>
-        <ComboBox x:Name="SlotComboBox" Width="200" Canvas.Left="10" Canvas.Top="270">
-            <ComboBoxItem Content="Morning"/>
-            <ComboBoxItem Content="Evening"/>
-        </ComboBox>
-
-        <TextBlock Text="Booking Date" Canvas.Left="10" Canvas.Top="310"/>
-        <DatePicker x:Name="BookingDatePicker" SelectedDateFormat="Short" DisplayDateEnd="{x:Static sys:DateTime.Now}"  Canvas.Left="10" Canvas.Top="151" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
-        <Button x:Name="btnRegister" Content="Register" Width="100" Canvas.Left="10" Canvas.Top="380" Click="btnRegister_Click"/>
-    </Canvas>
+            <TextBlock Text="Booking Date:" />
+            <DatePicker x:Name="BookingDatePicker" SelectedDateFormat="Short" DisplayDateStart="{x:Static sys:DateTime.Now}"/>
+            
+            <Button x:Name="btnRegister" Content="Register" Width="100" Height="30" Margin="0,10,0,0" Click="btnRegister_Click" />
+        </StackPanel>
+    </Grid>
+    
 </UserControl>

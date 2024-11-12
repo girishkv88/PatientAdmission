@@ -33,7 +33,7 @@ namespace PatientApp
 
         public void ConfirmPatients(List<Patient> selectedPatients)
         {
-            ConfirmedPatients.Clear();
+            //ConfirmedPatients.Clear();
             foreach (var patient in selectedPatients)
             {
                 ConfirmedPatients.Add(patient);

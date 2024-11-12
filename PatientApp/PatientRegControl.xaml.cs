@@ -37,7 +37,7 @@ namespace PatientApp
             string address = AddressTextBox.Text.Trim();
             string slot = (SlotComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
             DateTime? dateOfBirth = DOBPicker.SelectedDate;
-            DateTime bookingDate = DateTime.Now;
+            DateTime? bookingDate = BookingDatePicker.SelectedDate;
 
             // Validate Name
             if (string.IsNullOrWhiteSpace(name))
@@ -82,7 +82,7 @@ namespace PatientApp
                 DateOfBirth = dateOfBirth.Value,
                 Address = address,
                 Slot = slot,
-                BookingDate = bookingDate
+                BookingDate = bookingDate.Value,
             };
 
             try
